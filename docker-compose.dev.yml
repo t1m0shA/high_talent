@@ -1,0 +1,46 @@
+services:
+  db:
+    container_name: "${POSTGRES_CONTAINER_NAME}"
+    image: postgres:${POSTGRES_VERSION:-16}
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    container_name: ${REDIS_CONTAINER_NAME}
+    image: redis:${REDIS_VERSION:-7}
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+
+  fastapi:
+    container_name: "${FASTAPI_CONTAINER_NAME}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${FASTAPI_PORT}:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app/app
+      - ./requirements.txt:/app/requirements.txt
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: >
+      uvicorn ${UVICORN_APP_PATH} --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres_data:
