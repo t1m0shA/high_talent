@@ -5,17 +5,13 @@ from alembic import context
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-from app.db.base import Base
-from app.core.config import settings
+from app.db.base import Base, DATABASE_URL
+
 
 config = context.config
 if config.config_file_name:
     fileConfig(config.config_file_name)
 
-DATABASE_URL = (
-    f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}"
-    f"@{settings.postgres_host}:{settings.postgres_inner_port}/{settings.postgres_db}"
-)
 
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
