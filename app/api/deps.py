@@ -2,7 +2,6 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from app.core.config import settings
 from app.errors import UserInvalidCredentialsError, UserApiError
-from uuid import UUID
 from jwt import decode, PyJWTError
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")

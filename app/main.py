@@ -18,11 +18,11 @@ async def base_error_handler(request: Request, exc: BaseError):
 
 
 @app.exception_handler(Exception)
-async def unhandled_exception_handler(request: Request, exc: Exception):
+async def unknown_exception_handler(request: Request, exc: Exception):
 
     return JSONResponse(
         status_code=500,
-        content={"detail": f"Internal server error: {str(exc)}"},
+        content={"detail": f"Internal server error occured, see logs for more info."},
     )
 
 

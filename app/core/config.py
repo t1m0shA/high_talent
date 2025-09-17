@@ -1,6 +1,4 @@
-import os
-from pydantic import BaseModel
-from pydantic import SecretStr, PostgresDsn, RedisDsn
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

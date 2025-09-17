@@ -1,9 +1,7 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import NoResultFound
-from datetime import datetime
-from typing import List, Optional
+from typing import List
 from app.db.models import Question as QuestionModel
-from app.schemas import Question as QuestionSchema, Answer as AnswerSchema
+from app.schemas import Question as QuestionSchema
 from app.db.repositories import QuestionRepository
 from app.errors import QuestionNotFoundServiceError
 

@@ -4,18 +4,15 @@ from app.services.question import QuestionService
 from app.services.answer import AnswerService
 from app.services.auth import AuthService
 from app.api.deps import get_current_user
-from uuid import UUID
 from app.schemas import (
     Question,
     QuestionCreate,
     QuestionRetrieve,
     Answer,
-    User,
     AnswerCreate,
     AnswerRetrieve,
 )
 from fastapi import Depends, status, APIRouter
-from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime
 
 router = APIRouter(prefix="/questions", tags=["Questions section."])

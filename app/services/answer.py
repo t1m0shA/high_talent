@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from app.db.models import Question as QuestionModel, Answer as AnswerModel
 from app.db.repositories import AnswerRepository, QuestionRepository
 from app.schemas import Answer as AnswerSchema, Question as QuestionSchema
 from app.errors import QuestionNotFoundServiceError, AnswerNotFoundServiceError
