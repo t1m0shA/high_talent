@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
-from app.errors import AnswerError, QuestionError, UserError
+from app.errors import AnswerSchemaError, QuestionSchemaError, UserSchemaError
 from uuid import UUID
 
 
@@ -15,9 +15,9 @@ class User(BaseModel):
     def validate_username(cls, v: str) -> str:
 
         if not v.strip():
-            raise UserError("Username cannot be empty.")
+            raise UserSchemaError("Username cannot be empty.")
         if len(v) < 3:
-            raise UserError("Username must contain at least 3 characters.")
+            raise UserSchemaError("Username must contain at least 3 characters.")
 
         return v
 
@@ -26,7 +26,7 @@ class User(BaseModel):
     def validate_password(cls, v: str) -> str:
 
         if not v.strip():
-            raise UserError("Password cannot be empty.")
+            raise UserSchemaError("Password cannot be empty.")
 
         return v
 
@@ -45,7 +45,7 @@ class Answer(BaseModel):
         if len(v) > 0:
             return v
 
-        raise AnswerError(text="Answer must not be empty.")
+        raise AnswerSchemaError(text="Answer must not be empty.")
 
 
 class Question(BaseModel):
@@ -62,4 +62,4 @@ class Question(BaseModel):
         if len(v) > 0:
             return v
 
-        raise QuestionError(text="Question must not be empty.")
+        raise QuestionSchemaError(text="Question must not be empty.")

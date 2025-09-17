@@ -1,19 +1,19 @@
 from app.errors.base import BaseError
 
 
-class QuestionError(BaseError):
+class QuestionSchemaError(BaseError):
 
-    text = "Question error occured."
+    text = "Question schema error occured."
     status = 400
 
 
-class AnswerError(BaseError):
+class AnswerSchemaError(BaseError):
 
-    text = "Answer error occured."
+    text = "Answer schema error occured."
     status = 400
 
 
-class UserError(BaseError):
+class UserSchemaError(BaseError):
 
-    text = "User error occured."
-    status = 401
+    text = "User schema error occured."
+    status = 400

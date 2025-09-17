@@ -14,6 +14,10 @@ class User(Base):
     username = Column(String(255), nullable=False, unique=True, index=True)
     password_hash = Column(String(255), nullable=False)
 
+    answers = relationship(
+        "Answer", back_populates="user", cascade="all, delete-orphan"
+    )
+
 
 class Answer(Base):
 
@@ -33,8 +37,8 @@ class Answer(Base):
     )
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
-    user = relationship(User, backref="answers")
-    question = relationship("Question", backref="answers")
+    user = relationship(User, back_populates="answers")
+    question = relationship("Question", back_populates="answers")
 
 
 class Question(Base):
@@ -45,4 +49,6 @@ class Question(Base):
     text = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
-    answers = relationship(Answer, backref="question", cascade="all, delete-orphan")
+    answers = relationship(
+        Answer, back_populates="question", cascade="all, delete-orphan"
+    )

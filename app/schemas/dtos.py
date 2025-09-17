@@ -2,7 +2,7 @@ from pydantic import BaseModel, field_validator
 from uuid import UUID
 from datetime import datetime
 from app.schemas.entities import Question
-from app.errors import UserError
+from app.errors import UserSchemaError
 
 
 class UserCreate(BaseModel):
@@ -47,4 +47,3 @@ class AnswerRetrieve(BaseModel):
 class Token(BaseModel):
 
     access_token: str
-    token_type: str = "bearer"

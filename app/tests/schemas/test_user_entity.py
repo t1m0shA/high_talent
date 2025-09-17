@@ -1,6 +1,6 @@
 import pytest
 from app.schemas import User
-from app.errors import UserError
+from app.errors import UserSchemaError
 from pydantic import ValidationError
 from uuid import UUID
 
@@ -15,13 +15,13 @@ def test_user_entity(user: dict, uuid4_fixture: UUID):
 
 def test_user_entity_username_empty(uuid4_fixture: UUID):
 
-    with pytest.raises(UserError):
+    with pytest.raises(UserSchemaError):
         User(uuid=uuid4_fixture, username="", password=str(uuid4_fixture))
 
 
 def test_user_entity_username_short(uuid4_fixture: UUID):
 
-    with pytest.raises(UserError):
+    with pytest.raises(UserSchemaError):
         User(uuid=uuid4_fixture, username="ar", password=str(uuid4_fixture))
 
 
@@ -32,7 +32,7 @@ def test_user_entity_username_minimum(uuid4_fixture: UUID):
 
 def test_user_entity_password_empty(user: dict, uuid4_fixture: UUID):
 
-    with pytest.raises(UserError):
+    with pytest.raises(UserSchemaError):
         User(uuid=uuid4_fixture, username=user.get("username"), password="")
 
 
