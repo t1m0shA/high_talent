@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
-from app.core.config import settings
-import jwt
+from jwt import encode, decode
+from app.core import settings
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -26,7 +27,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
 
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(
+    encoded_jwt = encode(
         to_encode, str(settings.auth_secret_key), algorithm=settings.auth_algorithm
     )
 
@@ -36,8 +37,8 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 def decode_access_token(token: str) -> dict:
 
     try:
-        return jwt.decode(
-            token, settings.auth_secret_key, algorithms=[settings.auth_algorithm]
+        return decode(
+            token, str(settings.auth_secret_key), algorithms=[settings.auth_algorithm]
         )
     except:
         return {}

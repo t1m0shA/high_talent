@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.errors import AnswerNotFoundApiError
-from app.services.answer import AnswerService
-from app.schemas import AnswerRetrieve
 from fastapi import Depends, status, APIRouter
+
 from app.api.deps import get_current_user
+from app.db import get_db
+from app.errors import AnswerNotFoundApiError
+from app.services import AnswerService
+from app.schemas import AnswerRetrieve
+
 
 router = APIRouter(prefix="/answers", tags=["Answers section."])
 

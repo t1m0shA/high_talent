@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.errors import UserUsernameTakenError, UserInvalidCredentialsError
-from app.services.auth import AuthService
-from app.schemas import UserCreate, UserRetrieve, Token
 from fastapi import Depends, APIRouter
-from app.schemas import User
 from fastapi.security import OAuth2PasswordRequestForm
+
+from app.schemas import User
+from app.db import get_db
+from app.errors import UserUsernameTakenError, UserInvalidCredentialsError
+from app.services import AuthService
+from app.schemas import UserCreate, UserRetrieve, Token
 
 
 router = APIRouter(

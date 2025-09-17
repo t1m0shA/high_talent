@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
-from app.db.models import User, Question, Answer
+from uuid import UUID
+
+from app.db import User, Question, Answer
 from app.schemas import Question as QuestionSchema, Answer as AnswerSchema
 from app.errors import QuestionNotFoundDbError, AnswerNotFoundDbError
-from uuid import UUID
 
 
 class UserRepository:

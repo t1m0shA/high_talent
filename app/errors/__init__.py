@@ -1,3 +1,5 @@
+"""Custom errors"""
+
 from app.errors.schema_errors import (
     UserEmptyUsernameError,
     UserEmptyPasswordError,

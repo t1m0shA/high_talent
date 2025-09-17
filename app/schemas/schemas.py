@@ -1,14 +1,14 @@
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 from datetime import datetime
-from uuid import uuid4
+from uuid import uuid4, UUID
 from typing import Optional
+
 from app.errors import (
     QuestionEmptyError,
     UserEmptyUsernameError,
     UserEmptyPasswordError,
     AnswerEmptyError,
 )
-from uuid import UUID
 
 
 class User(BaseModel):

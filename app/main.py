@@ -1,8 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from app.api.v1.auth_routes import router as auth_router
-from app.api.v1.questions_routes import router as question_router
-from app.api.v1.answers_routes import router as answer_router
+from app.api.v1 import answer_router, auth_router, question_router
 from app.errors import BaseError
 
 app = FastAPI()

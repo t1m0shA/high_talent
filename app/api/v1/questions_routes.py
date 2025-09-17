@@ -1,8 +1,11 @@
 from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.services.question import QuestionService
-from app.services.answer import AnswerService
-from app.services.auth import AuthService
+from fastapi import Depends, status, APIRouter
+from datetime import datetime
+
+from app.db import get_db
+from app.services import QuestionService
+from app.services import AnswerService
+from app.services import AuthService
 from app.api.deps import get_current_user
 from app.schemas import (
     Question,
@@ -12,8 +15,7 @@ from app.schemas import (
     AnswerCreate,
     AnswerRetrieve,
 )
-from fastapi import Depends, status, APIRouter
-from datetime import datetime
+
 
 router = APIRouter(prefix="/questions", tags=["Questions section."])
 

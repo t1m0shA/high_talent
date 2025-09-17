@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from typing import List
-from app.db.models import Question as QuestionModel
+
+from app.db import Question as QuestionModel, QuestionRepository
 from app.schemas import Question as QuestionSchema
-from app.db.repositories import QuestionRepository
 from app.errors import QuestionNotFoundServiceError
 
 

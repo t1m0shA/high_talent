@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session
-from app.db.repositories import UserRepository
+from datetime import timedelta
+from uuid import UUID
+
 from app.schemas import User
 from app.errors import UserNotFoundServiceError
-from datetime import timedelta
-from app.core.config import settings
-from uuid import UUID
-from app.core.security import (
+from app.core import settings
+from app.db import UserRepository
+from app.core import (
     get_password_hash,
     verify_password,
     create_access_token,
