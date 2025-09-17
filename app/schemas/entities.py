@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from datetime import datetime
 from uuid import uuid4
+from typing import Optional
 from app.errors import AnswerSchemaError, QuestionSchemaError, UserSchemaError
 from uuid import UUID
 
@@ -34,7 +35,7 @@ class User(BaseModel):
 
 class Answer(BaseModel):
 
-    id: int = Field(..., gt=0)
+    id: Optional[int] = None
     text: str
     user: User
     created_at: datetime
@@ -51,7 +52,9 @@ class Answer(BaseModel):
 
 class Question(BaseModel):
 
-    id: int = Field(..., gt=0)
+    model_config = ConfigDict(from_attributes=True)
+
+    id: Optional[int] = None
     text: str
     created_at: datetime
     answers: list[Answer]

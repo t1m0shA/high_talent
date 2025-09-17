@@ -21,4 +21,5 @@ def test_question_retrieve(question: dict):
         id=question.get("id"),
         text=question.get("text"),
         created_at=question.get("created_at"),
+        answers=[],
     )

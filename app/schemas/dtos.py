@@ -22,13 +22,6 @@ class QuestionCreate(BaseModel):
     text: str
 
 
-class QuestionRetrieve(BaseModel):
-
-    id: int
-    text: str
-    created_at: datetime
-
-
 class AnswerCreate(BaseModel):
 
     text: str
@@ -39,9 +32,16 @@ class AnswerRetrieve(BaseModel):
 
     id: int
     text: str
-    question: QuestionRetrieve
     user: UserRetrieve
     created_at: datetime
+
+
+class QuestionRetrieve(BaseModel):
+
+    id: int
+    text: str
+    created_at: datetime
+    answers: list[AnswerRetrieve]
 
 
 class Token(BaseModel):
