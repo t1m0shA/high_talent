@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db.repositories import UserRepository
-from app.schemas import UserCreate
+from app.schemas import User
 from datetime import timedelta
 from app.core.config import settings
 from uuid import UUID
@@ -17,10 +17,10 @@ class AuthService:
 
         self.repo = UserRepository(db)
 
-    def register_user(self, user_data: UserCreate):
+    def register_user(self, user_entity: User):
 
-        hashed = get_password_hash(user_data.password)
-        return self.repo.create(username=user_data.username, password_hash=hashed)
+        hashed = get_password_hash(user_entity.password)
+        return self.repo.create(username=user_entity.username, password_hash=hashed)
 
     def authenticate_user(self, username: str, password: str):
 

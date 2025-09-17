@@ -1,12 +1,13 @@
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
+from uuid import uuid4
 from app.errors import AnswerSchemaError, QuestionSchemaError, UserSchemaError
 from uuid import UUID
 
 
 class User(BaseModel):
 
-    uuid: UUID
+    uuid: UUID = Field(default_factory=uuid4)
     username: str
     password: str
 

@@ -1,9 +1,10 @@
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.errors import UserAuthError, UserSchemaError
+from app.errors import UserAuthError
 from app.services.auth import AuthService
 from app.schemas import UserCreate, UserRetrieve, Token
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends, APIRouter
+from app.schemas import User
 from fastapi.security import OAuth2PasswordRequestForm
 
 
@@ -20,18 +21,15 @@ router = APIRouter(
 )
 def register(user: UserCreate, db: Session = Depends(get_db)):
 
-    if not user.username:
-        raise UserSchemaError(text="The username cannot be empty")
-    if not user.password:
-        raise UserSchemaError(text="The password cannot be blank")
+    user_entity = User(username=user.username, password=user.password)
 
     service = AuthService(db)
-    existing = service.repo.get_by_username(user.username)
+    existing = service.repo.get_by_username(user_entity.username)
 
     if existing:
         raise UserAuthError(text="This username is already in use", status=400)
 
-    return service.register_user(user)
+    return service.register_user(user_entity)
 
 
 @router.post("/login", response_model=Token, include_in_schema=False)
@@ -40,10 +38,11 @@ def login(
 ):
 
     service = AuthService(db)
-    db_user = service.authenticate_user(form_data.username, form_data.password)
+    user_entity = User(username=form_data.username, password=form_data.password)
+    db_user = service.authenticate_user(user_entity.username, user_entity.password)
 
     if not db_user:
         raise UserAuthError(text="Invalid credentials")
 
-    token = service.create_user_token(db_user.uuid, db_user.username)
+    token = service.create_user_token(user_entity.uuid, user_entity.username)
     return Token(access_token=token)
