@@ -25,7 +25,6 @@ class QuestionCreate(BaseModel):
 class AnswerCreate(BaseModel):
 
     text: str
-    question_id: int
 
 
 class AnswerRetrieve(BaseModel):

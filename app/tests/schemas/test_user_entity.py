@@ -38,5 +38,4 @@ def test_user_entity_password_empty(user: dict, uuid4_fixture: UUID):
 
 def test_user_entity_password_none(user: dict, uuid4_fixture: UUID):
 
-    with pytest.raises(ValidationError):
-        User(uuid=uuid4_fixture, username=user.get("username"), password=None)
+    User(uuid=uuid4_fixture, username=user.get("username"), password=None)

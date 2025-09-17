@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from app.db.repositories import UserRepository
 from app.schemas import User
+from app.errors import UserSchemaError
 from datetime import timedelta
 from app.core.config import settings
 from uuid import UUID
@@ -35,3 +36,12 @@ class AuthService:
             {"sub": str(user_id), "username": username},
             expires_delta=timedelta(minutes=settings.access_token_expire),
         )
+
+    def get_by_username(self, username: str) -> User:
+
+        user_model = self.repo.get_by_username(username)
+
+        if not user_model:
+            raise UserSchemaError(text="User {username} not found.", status=404)
+
+        return User.model_validate(user_model)

@@ -5,21 +5,14 @@ from pydantic import ValidationError
 
 def test_answer_create(answer: dict, question: dict):
 
-    answer_dto = AnswerCreate(text=answer.get("text"), question_id=question.get("id"))
+    answer_dto = AnswerCreate(text=answer.get("text"))
     assert answer_dto.text == "Test answer text"
-    assert answer_dto.question_id == 12
 
 
 def test_answer_create_text_none():
 
     with pytest.raises(ValidationError):
-        AnswerCreate(text=None, question_id=14)
-
-
-def test_answer_create_question_id_none():
-
-    with pytest.raises(ValidationError):
-        AnswerCreate(text="Test answer text", question_id=None)
+        AnswerCreate(text=None)
 
 
 def test_answer_retrieve(answer: dict, question: dict, user: dict):

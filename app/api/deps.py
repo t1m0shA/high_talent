@@ -2,12 +2,13 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from app.core.config import settings
 from app.errors import UserAuthError
+from uuid import UUID
 from jwt import decode, PyJWTError
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
 
     try:
 
@@ -17,7 +18,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
             algorithms=[settings.auth_algorithm],
         )
 
-        username: str = payload.get("sub")
+        username: str = payload.get("username")
         if username is None:
             raise UserAuthError(text="Invalid authentication credentials")
 

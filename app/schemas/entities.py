@@ -8,9 +8,11 @@ from uuid import UUID
 
 class User(BaseModel):
 
+    model_config = ConfigDict(from_attributes=True)
+
     uuid: UUID = Field(default_factory=uuid4)
     username: str
-    password: str
+    password: Optional[str] = None
 
     @field_validator("username")
     @classmethod
@@ -27,13 +29,15 @@ class User(BaseModel):
     @classmethod
     def validate_password(cls, v: str) -> str:
 
-        if not v.strip():
+        if v is not None and not v.strip():
             raise UserSchemaError("Password cannot be empty.")
 
         return v
 
 
 class Answer(BaseModel):
+
+    model_config = ConfigDict(from_attributes=True)
 
     id: Optional[int] = None
     text: str
