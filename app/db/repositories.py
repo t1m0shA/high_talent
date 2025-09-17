@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from app.db.models import User, Question, Answer
+from app.schemas import Question as QuestionSchema
+from app.errors import QuestionSchemaError
 from datetime import datetime
 import uuid
 
@@ -21,9 +23,11 @@ class UserRepository:
     def create(self, username: str, password_hash: str) -> User:
 
         user = User(username=username, password_hash=password_hash)
+
         self.db.add(user)
         self.db.commit()
         self.db.refresh(user)
+
         return user
 
 
@@ -37,13 +41,27 @@ class QuestionRepository:
 
         return self.db.query(Question).filter(Question.id == question_id).first()
 
-    def create(self, text: str) -> Question:
+    def create(self, question: QuestionSchema) -> Question:
 
-        question = Question(text=text, created_at=datetime.now())
+        question = Question(text=question.text, created_at=question.created_at)
+
         self.db.add(question)
         self.db.commit()
         self.db.refresh(question)
+
         return question
+
+    def delete(self, question_id: int) -> None:
+
+        question = self.db.query(Question).filter(Question.id == question_id).first()
+
+        if not question:
+            raise QuestionSchemaError(
+                status=404, text=f"Question {question_id} not found."
+            )
+
+        self.db.delete(question)
+        self.db.commit()
 
     def list_all(self) -> list[Question]:
 
