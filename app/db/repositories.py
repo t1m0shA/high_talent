@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.db.models import User, Question, Answer
 from app.schemas import Question as QuestionSchema, Answer as AnswerSchema
-from app.errors import QuestionSchemaError, AnswerSchemaError
+from app.errors import QuestionNotFoundDbError, AnswerNotFoundDbError
 from datetime import datetime
 from uuid import UUID
 
@@ -56,9 +56,7 @@ class QuestionRepository:
         question = self.db.query(Question).filter(Question.id == question_id).first()
 
         if not question:
-            raise QuestionSchemaError(
-                status=404, text=f"Question {question_id} not found."
-            )
+            raise QuestionNotFoundDbError(text=f"Question {question_id} not found.")
 
         self.db.delete(question)
         self.db.commit()
@@ -98,7 +96,7 @@ class AnswerRepository:
         answer = self.db.query(Answer).filter(Answer.id == answer_id).first()
 
         if not answer:
-            raise AnswerSchemaError(status=404, text=f"Answer {answer_id} not found.")
+            raise AnswerNotFoundDbError(text=f"Answer {answer_id} not found.")
 
         self.db.delete(answer)
         self.db.commit()

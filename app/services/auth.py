@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.db.repositories import UserRepository
 from app.schemas import User
-from app.errors import UserSchemaError
+from app.errors import UserNotFoundServiceError
 from datetime import timedelta
 from app.core.config import settings
 from uuid import UUID
@@ -42,6 +42,6 @@ class AuthService:
         user_model = self.repo.get_by_username(username)
 
         if not user_model:
-            raise UserSchemaError(text="User {username} not found.", status=404)
+            raise UserNotFoundServiceError(text=f"User {username} not found.")
 
         return User.model_validate(user_model)

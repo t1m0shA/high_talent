@@ -1,19 +1,25 @@
 from app.errors.base import BaseError
 
 
-class QuestionSchemaError(BaseError):
+class UserEmptyUsernameError(BaseError):
 
-    text = "Question schema error occured."
+    text = "Username cannot be empty."
     status = 400
 
 
-class AnswerSchemaError(BaseError):
+class UserEmptyPasswordError(BaseError):
 
-    text = "Answer schema error occured."
+    text = "Password cannot be blank."
     status = 400
 
 
-class UserSchemaError(BaseError):
+class AnswerEmptyError(BaseError):
 
-    text = "User schema error occured."
-    status = 400
+    text = "Answer must not be empty."
+    status = 422
+
+
+class QuestionEmptyError(BaseError):
+
+    text = "Question must not be empty."
+    status = 422

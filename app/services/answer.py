@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.db.models import Question as QuestionModel, Answer as AnswerModel
 from app.db.repositories import AnswerRepository, QuestionRepository
 from app.schemas import Answer as AnswerSchema, Question as QuestionSchema
-from app.errors import AnswerSchemaError, QuestionSchemaError
+from app.errors import QuestionNotFoundServiceError, AnswerNotFoundServiceError
 
 
 class AnswerService:
@@ -16,8 +16,8 @@ class AnswerService:
 
         question = self.question_repo.get_by_id(question_id)
         if not question:
-            raise QuestionSchemaError(
-                status=404, text=f"Question {question_id} not found."
+            raise QuestionNotFoundServiceError(
+                text=f"Question {question_id} not found."
             )
 
         question_schema = QuestionSchema.model_validate(question)
@@ -35,7 +35,7 @@ class AnswerService:
         answer = self.repo.get_by_id(answer_id)
 
         if not answer:
-            raise AnswerSchemaError(status=404, text=f"Answer {answer_id} not found.")
+            raise AnswerNotFoundServiceError(text=f"Answer {answer_id} not found.")
 
         return AnswerSchema(
             id=answer.id,

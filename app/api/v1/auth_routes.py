@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.errors import UserAuthError
+from app.errors import UserUsernameTakenError, UserInvalidCredentialsError
 from app.services.auth import AuthService
 from app.schemas import UserCreate, UserRetrieve, Token
 from fastapi import Depends, APIRouter
@@ -27,7 +27,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     existing = service.repo.get_by_username(user_schema.username)
 
     if existing:
-        raise UserAuthError(text="This username is already in use", status=400)
+        raise UserUsernameTakenError(text="This username is already in use")
 
     return service.register_user(user_schema)
 
@@ -42,7 +42,7 @@ def login(
     db_user = service.authenticate_user(user_schema.username, user_schema.password)
 
     if not db_user:
-        raise UserAuthError(text="Invalid credentials")
+        raise UserInvalidCredentialsError()
 
     token = service.create_user_token(user_schema.uuid, user_schema.username)
     return Token(access_token=token)

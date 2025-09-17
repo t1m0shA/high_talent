@@ -5,7 +5,7 @@ from typing import List, Optional
 from app.db.models import Question as QuestionModel
 from app.schemas import Question as QuestionSchema, Answer as AnswerSchema
 from app.db.repositories import QuestionRepository
-from app.errors import QuestionSchemaError
+from app.errors import QuestionNotFoundServiceError
 
 
 class QuestionService:
@@ -24,8 +24,8 @@ class QuestionService:
         question = self.repo.get_by_id(question_id)
 
         if not question:
-            raise QuestionSchemaError(
-                status=404, text=f"Question {question_id} not found."
+            raise QuestionNotFoundServiceError(
+                text=f"Question {question_id} not found."
             )
 
         return self._to_schema(question)

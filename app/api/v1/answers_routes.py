@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.errors import UserAuthError, UserSchemaError, AnswerSchemaError
+from app.errors import AnswerNotFoundApiError
 from app.services.question import QuestionService
 from app.services.answer import AnswerService
 from app.services.auth import AuthService
@@ -30,6 +30,6 @@ def delete_answer(
     answer_schema = service.get_answer(id)
 
     if answer_schema.user.username != username:
-        raise AnswerSchemaError(text=f"Answer {id} not found.", status=404)
+        raise AnswerNotFoundApiError(text=f"Answer {id} not found.")
 
     return service.delete_answer(id)

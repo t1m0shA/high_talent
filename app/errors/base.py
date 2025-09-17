@@ -3,9 +3,10 @@ class BaseError(Exception):
     text = "Base error occured."
     status = 400
 
-    def __init__(self, text, status=None):
+    def __init__(self, text=None, status=None):
 
-        self.text = text
+        if text:
+            self.text = text
 
         if status:
             self.status = status
