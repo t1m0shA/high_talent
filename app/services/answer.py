@@ -20,8 +20,8 @@ class AnswerService:
                 status=404, text=f"Question {question_id} not found."
             )
 
-        question_entity = QuestionSchema.model_validate(question)
-        created = self.repo.create(answer, question_entity)
+        question_schema = QuestionSchema.model_validate(question)
+        created = self.repo.create(answer, question_schema)
 
         return AnswerSchema(
             id=created.id,

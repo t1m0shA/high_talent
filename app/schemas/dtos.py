@@ -1,8 +1,6 @@
 from pydantic import BaseModel, field_validator
 from uuid import UUID
 from datetime import datetime
-from app.schemas.entities import Question
-from app.errors import UserSchemaError
 
 
 class UserCreate(BaseModel):

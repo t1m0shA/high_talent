@@ -27,9 +27,9 @@ def delete_answer(
     username: str = Depends(get_current_user),
 ):
     service = AnswerService(db)
-    answer_entity = service.get_answer(id)
+    answer_schema = service.get_answer(id)
 
-    if answer_entity.user.username != username:
+    if answer_schema.user.username != username:
         raise AnswerSchemaError(text=f"Answer {id} not found.", status=404)
 
     return service.delete_answer(id)

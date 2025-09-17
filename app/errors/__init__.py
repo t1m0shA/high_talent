@@ -1,4 +1,4 @@
-from app.errors.entity_errors import (
+from app.errors.schema_errors import (
     QuestionSchemaError,
     AnswerSchemaError,
     UserSchemaError,

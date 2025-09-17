@@ -8,4 +8,4 @@ from app.schemas.dtos import (
     Token,
 )
 
-from app.schemas.entities import User, Answer, Question
+from app.schemas.schemas import User, Answer, Question

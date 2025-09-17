@@ -18,10 +18,10 @@ class AuthService:
 
         self.repo = UserRepository(db)
 
-    def register_user(self, user_entity: User):
+    def register_user(self, user_schema: User):
 
-        hashed = get_password_hash(user_entity.password)
-        return self.repo.create(username=user_entity.username, password_hash=hashed)
+        hashed = get_password_hash(user_schema.password)
+        return self.repo.create(username=user_schema.username, password_hash=hashed)
 
     def authenticate_user(self, username: str, password: str):
 

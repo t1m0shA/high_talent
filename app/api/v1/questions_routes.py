@@ -24,12 +24,12 @@ router = APIRouter(prefix="/questions", tags=["Questions section."])
 @router.post("/", response_model=QuestionRetrieve, status_code=status.HTTP_201_CREATED)
 def create_question(question: QuestionCreate, db: Session = Depends(get_db)):
 
-    question_entity = Question(
+    question_schema = Question(
         text=question.text, created_at=datetime.now(), answers=[]
     )
 
     service = QuestionService(db)
-    created = service.create_question(question_entity)
+    created = service.create_question(question_schema)
 
     return created
 
@@ -71,16 +71,16 @@ def create_answer(
     username: str = Depends(get_current_user),
 ):
     question_service = QuestionService(db)
-    question_entity = question_service.get_question(id)
+    question_schema = question_service.get_question(id)
 
     auth_service = AuthService(db)
-    user_entity = auth_service.get_by_username(username)
+    user_schema = auth_service.get_by_username(username)
 
-    answer_entity = Answer(
-        text=answer.text, user=user_entity, created_at=datetime.now()
+    answer_schema = Answer(
+        text=answer.text, user=user_schema, created_at=datetime.now()
     )
 
     answer_service = AnswerService(db)
-    created = answer_service.create_answer(question_entity.id, answer_entity)
+    created = answer_service.create_answer(question_schema.id, answer_schema)
 
     return created
