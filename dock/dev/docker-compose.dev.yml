@@ -18,16 +18,16 @@ services:
   fastapi:
     container_name: "${FASTAPI_CONTAINER_NAME}"
     build:
-      context: .
+      context: ../..
       dockerfile: Dockerfile
     ports:
       - "${FASTAPI_PORT}:8000"
     env_file:
       - .env
     volumes:
-      - ./app:/app/app
-      - ./requirements.txt:/app/requirements.txt
-      - ./logs:/app/logs
+      - ../../app:/app/app
+      - ../../requirements.txt:/app/requirements.txt
+      - ../../logs:/app/logs
     depends_on:
       db:
         condition: service_healthy

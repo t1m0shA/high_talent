@@ -1,0 +1,39 @@
+services:
+  db:
+    container_name: "${POSTGRES_CONTAINER_NAME}"
+    image: postgres:${POSTGRES_VERSION:-16}
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+  tests:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: "${TESTS_CONTAINER_NAME}"
+    env_file:
+      - .env
+    volumes:
+      - ../../app:/app/app
+      - ../../requirements.txt:/app/requirements.txt
+      - ../../tests:/app/tests
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -c "
+      alembic upgrade head &&
+      pytest -v --disable-warnings --maxfail=1
+      "
+
+volumes:
+  postgres_test_data:

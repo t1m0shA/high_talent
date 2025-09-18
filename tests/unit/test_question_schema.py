@@ -1,6 +1,6 @@
 import pytest
 from app.schemas import Question, Answer
-from app.errors import QuestionSchemaError
+from app.errors import QuestionEmptyError
 
 
 def test_question_entity(question: dict, answer: dict):
@@ -18,5 +18,5 @@ def test_question_entity_text_empty(question: dict):
     question_data = question.copy()
     question_data.update({"text": ""})
 
-    with pytest.raises(QuestionSchemaError):
+    with pytest.raises(QuestionEmptyError):
         Question(**question_data)

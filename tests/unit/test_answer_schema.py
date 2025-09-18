@@ -1,6 +1,6 @@
 import pytest
 from app.schemas import Answer, User
-from app.errors import AnswerSchemaError
+from app.errors import AnswerEmptyError
 
 
 def test_answer_entity(answer: dict, user: dict):
@@ -18,5 +18,5 @@ def test_answer_entity_text_empty(answer: dict):
     answer_data = answer.copy()
     answer_data.update({"text": ""})
 
-    with pytest.raises(AnswerSchemaError):
+    with pytest.raises(AnswerEmptyError):
         Answer(**answer_data)
