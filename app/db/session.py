@@ -9,6 +9,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db() -> Generator[Session, Any, None]:
+    """Yield a database session and ensure it is closed after use."""
 
     db = SessionLocal()
 

@@ -7,6 +7,7 @@ from app.errors import QuestionNotFoundServiceError
 
 
 class QuestionService:
+    """Service for managing questions and related operations."""
 
     def __init__(self, db: Session):
 

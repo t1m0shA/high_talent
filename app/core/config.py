@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """Application configuration settings."""
 
     auth_secret_key: SecretStr
     auth_algorithm: str

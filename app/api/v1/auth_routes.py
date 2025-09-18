@@ -21,6 +21,7 @@ router = APIRouter(
     summary="Register a new user with username and password.",
 )
 def register(user: UserCreate, db: Session = Depends(get_db)):
+    """Register a new user with a username and password."""
 
     user_schema = User(username=user.username, password=user.password)
 
@@ -37,6 +38,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
+    """Authenticate user and return an access token."""
 
     service = AuthService(db)
     user_schema = User(username=form_data.username, password=form_data.password)

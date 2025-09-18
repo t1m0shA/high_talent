@@ -28,6 +28,7 @@ logger.add(
 
 
 def log_by_status(status_code: int, message: str = "") -> None:
+    """Log a message with a level based on HTTP status code."""
 
     if 500 <= status_code <= 599:
         logger.critical(message)

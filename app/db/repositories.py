@@ -7,6 +7,7 @@ from app.errors import QuestionNotFoundDbError, AnswerNotFoundDbError
 
 
 class UserRepository:
+    """Repository for user database operations."""
 
     def __init__(self, db: Session):
 
@@ -32,6 +33,7 @@ class UserRepository:
 
 
 class QuestionRepository:
+    """Repository for question database operations."""
 
     def __init__(self, db: Session):
 
@@ -67,6 +69,7 @@ class QuestionRepository:
 
 
 class AnswerRepository:
+    """Repository for answer database operations."""
 
     def __init__(self, db: Session):
 

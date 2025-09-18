@@ -22,6 +22,7 @@ router = APIRouter(prefix="/questions", tags=["Questions section."])
 
 @router.post("/", response_model=QuestionRetrieve, status_code=status.HTTP_201_CREATED)
 def create_question(question: QuestionCreate, db: Session = Depends(get_db)):
+    """Create a new question."""
 
     question_schema = Question(
         text=question.text, created_at=datetime.now(), answers=[]
@@ -35,6 +36,7 @@ def create_question(question: QuestionCreate, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[QuestionRetrieve])
 def list_questions(db: Session = Depends(get_db)):
+    """List all questions."""
 
     service = QuestionService(db)
     questions = service.list_questions()
@@ -44,6 +46,7 @@ def list_questions(db: Session = Depends(get_db)):
 
 @router.get("/{id}", response_model=QuestionRetrieve)
 def get_question(id: int, db: Session = Depends(get_db)):
+    """Retrieve a question by its ID."""
 
     service = QuestionService(db)
     question = service.get_question(id)
@@ -53,6 +56,7 @@ def get_question(id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_question(id: int, db: Session = Depends(get_db)):
+    """Delete a question by its ID."""
 
     service = QuestionService(db)
     return service.delete_question(id)
@@ -69,6 +73,8 @@ def create_answer(
     db: Session = Depends(get_db),
     username: str = Depends(get_current_user),
 ):
+    """Create an answer for a specific question."""
+
     question_service = QuestionService(db)
     question_schema = question_service.get_question(id)
 

@@ -13,6 +13,7 @@ router = APIRouter(prefix="/answers", tags=["Answers section."])
 
 @router.get("/{id}", response_model=AnswerRetrieve)
 def get_answer(id: int, db: Session = Depends(get_db)):
+    """Retrieve an answer by its ID."""
 
     service = AnswerService(db)
     return service.get_answer(id)
@@ -24,6 +25,8 @@ def delete_answer(
     db: Session = Depends(get_db),
     username: str = Depends(get_current_user),
 ):
+    """Delete an answer if the current user is the author."""
+
     service = AnswerService(db)
     answer_schema = service.get_answer(id)
 

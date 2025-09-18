@@ -6,6 +6,7 @@ from app.errors import QuestionNotFoundServiceError, AnswerNotFoundServiceError
 
 
 class AnswerService:
+    """Service for managing answers and related question operations."""
 
     def __init__(self, db: Session):
 

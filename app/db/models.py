@@ -8,6 +8,7 @@ from app.db.base import Base
 
 
 class User(Base):
+    """Database model for user."""
 
     __tablename__ = "users"
 
@@ -21,6 +22,7 @@ class User(Base):
 
 
 class Answer(Base):
+    """Database model for answer."""
 
     __tablename__ = "answers"
 
@@ -43,6 +45,7 @@ class Answer(Base):
 
 
 class Question(Base):
+    """Database model for question."""
 
     __tablename__ = "questions"
 

@@ -14,6 +14,7 @@ from app.core import (
 
 
 class AuthService:
+    """Service for user authentication, registration, and token management."""
 
     def __init__(self, db: Session):
 

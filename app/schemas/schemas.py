@@ -12,6 +12,7 @@ from app.errors import (
 
 
 class User(BaseModel):
+    """Schema for user data and validation."""
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -41,6 +42,7 @@ class User(BaseModel):
 
 
 class Answer(BaseModel):
+    """Schema for answer data and validation."""
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -60,6 +62,7 @@ class Answer(BaseModel):
 
 
 class Question(BaseModel):
+    """Schema for question data and validation."""
 
     model_config = ConfigDict(from_attributes=True)
 
