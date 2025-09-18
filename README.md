@@ -13,10 +13,14 @@ cd high_talent
 ```sh
 docker compose -f dock/dev/docker-compose.dev.yml up --build
 ```
-### 4. Перейти по ссылке
-```sh
-http://127.0.0.1:8001/docs
-```
+###
+Нужно дождаться пока скачаются и сбилдятся все зависимости для проекта
+###
+### 4. Перейти по ссылке ниже
+[http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
+###
+Это ссылка на OpenAPI страницу локально запущенного проекта
+
 ### 5. Запустить тесты (опциально)
 ```sh
 docker compose -f dock/test/docker-compose.test.yml run --rm tests
